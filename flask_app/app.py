@@ -1,14 +1,28 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
+from dotenv import load_dotenv
+import os
 
+# Load environment variables
+load_dotenv()
+
+# Retrieve MySQL credentials
+MYSQL_HOST = os.getenv("MYSQL_HOST")
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASSWORD = os.getencv("MYSQL_PASSWORD")
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
+SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
+
+# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # For flash messages
 
 # MySQL Configuration
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = "Alex10062003!"  # Ensure this is correct
-app.config["MYSQL_DB"] = "plant_characteristics_db"  # Ensure the database exists
+app.config["MYSQL_HOST"] = MYSQL_HOST
+app.config["MYSQL_USER"] = MYSQL_USER
+app.config["MYSQL_PASSWORD"] = MYSQL_PASSWORD
+app.config["MYSQL_DB"] = MYSQL_DATABASE
+app.config["SECRET_KEY"] = SECRET_KEY
+
 mysql = MySQL(app)
 
 
