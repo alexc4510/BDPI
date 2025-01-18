@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Characteristics</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/">Home</a></li>
+            <li><a href="/plants">Plants</a></li>
+            <li><a href="/characteristics">Characteristics</a></li>
+            <li><a href="/plant_characteristics">Associations</a></li>
+        </ul>
+    </nav>
+    <h1>Manage Characteristics</h1>
+    <p>
+        This page allows you to manage plant characteristics. You can:
+    </p>
+    <ul>
+        <li>View all defined characteristics, such as height, color, and water requirements.</li>
+        <li>Add new characteristics with attributes like value, unit, and importance.</li>
+    </ul>
+
+    <form method="POST" action="/add_characteristic">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="value" placeholder="Value">
+        <input type="text" name="unit" placeholder="Unit">
+        <select name="importance">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button type="submit">Add Characteristic</button>
+    </form>
+
+    <h2>Existing Characteristics</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Unit</th>
+            <th>Importance</th>
+            <th>Actions</th>
+        </tr>
+        {% for characteristic in characteristics %}
+        <tr>
+            <td>{{ characteristic[1] }}</td>
+            <td>{{ characteristic[2] }}</td>
+            <td>{{ characteristic[3] }}</td>
+            <td>{{ characteristic[4] }}</td>
+            <td>
+                <a href="/delete_characteristic/{{ characteristic[0] }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plants</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/">Home</a></li>
+            <li><a href="/plants">Plants</a></li>
+            <li><a href="/characteristics">Characteristics</a></li>
+            <li><a href="/plant_characteristics">Associations</a></li>
+        </ul>
+    </nav>
+    <h1>Manage Plants</h1>
+    <p>
+        This page allows you to manage plant-related data. You can:
+    </p>
+    <ul>
+        <li>View all plants currently in the database.</li>
+        <li>Add new plants, including details like scientific name, description, origin, and type.</li>
+    </ul>
+
+    <form method="POST" action="/add_plant">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="scientific_name" placeholder="Scientific Name">
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="text" name="origin" placeholder="Origin">
+        <select name="type">
+            <option value="Flower">Flower</option>
+            <option value="Tree">Tree</option>
+            <option value="Shrub">Shrub</option>
+            <option value="Herb">Herb</option>
+            <option value="Cactus">Cactus</option>
+            <option value="Other">Other</option>
+        </select>
+        <button type="submit">Add Plant</button>
+    </form>
+
+    <h2>Existing Plants</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Scientific Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        {% for plant in plants %}
+        <tr>
+            <td>{{ plant[1] }}</td>
+            <td>{{ plant[2] }}</td>
+            <td>{{ plant[3] }}</td>
+            <td>
+                <a href="/delete_plant/{{ plant[0] }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

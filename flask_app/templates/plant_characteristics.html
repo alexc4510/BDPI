@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Associations</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/">Home</a></li>
+            <li><a href="/plants">Plants</a></li>
+            <li><a href="/characteristics">Characteristics</a></li>
+            <li><a href="/plant_characteristics">Associations</a></li>
+        </ul>
+    </nav>
+
+    <h1>Manage Plant-Characteristic Associations</h1>
+    <p>
+        This page allows you to manage the relationships between plants and their characteristics. You can:
+    </p>
+    <ul>
+        <li>View all existing associations, including any notes provided for each link.</li>
+        <li>Add new associations by specifying the plant and characteristic IDs and an optional note.</li>
+    </ul>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Tables for Plants and Characteristics -->
+    <div class="tables-container">
+        <div class="table-wrapper">
+            <h2>Available Plants and Their IDs</h2>
+            <table>
+                <tr>
+                    <th>Plant ID</th>
+                    <th>Plant Name</th>
+                </tr>
+                {% for plant in plants %}
+                <tr>
+                    <td>{{ plant[0] }}</td>
+                    <td>{{ plant[1] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="table-wrapper">
+            <h2>Available Characteristics and Their IDs</h2>
+            <table>
+                <tr>
+                    <th>Characteristic ID</th>
+                    <th>Characteristic Name</th>
+                </tr>
+                {% for characteristic in characteristics %}
+                <tr>
+                    <td>{{ characteristic[0] }}</td>
+                    <td>{{ characteristic[1] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Association Form -->
+    <h2>Add a New Association</h2>
+    <form method="POST" action="/add_association">
+        <input type="number" name="plant_id" placeholder="Plant ID" required>
+        <input type="number" name="characteristic_id" placeholder="Characteristic ID" required>
+        <textarea name="note" placeholder="Optional Note"></textarea>
+        <button type="submit">Add Association</button>
+    </form>
+
+    <!-- Existing Associations -->
+    <h2>Existing Associations</h2>
+    <table>
+        <tr>
+            <th>Plant</th>
+            <th>Characteristic</th>
+            <th>Note</th>
+            <th>Actions</th>
+        </tr>
+        {% for association in plant_characteristics %}
+        <tr>
+            <td>{{ association[0] }}</td>
+            <td>{{ association[1] }}</td>
+            <td>{{ association[2] }}</td>
+            <td>
+                <form method="POST" action="/delete_association">
+                    <input type="hidden" name="plant_id" value="{{ association[3] }}">
+                    <input type="hidden" name="characteristic_id" value="{{ association[4] }}">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
