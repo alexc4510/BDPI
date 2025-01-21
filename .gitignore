@@ -1,14 +1,49 @@
-# Ignore Python cache files
+# Python cache files (for the backend)
 __pycache__/
 *.pyc
 *.pyo
 
-# Ignore virtual environment
+# Virtual environment
 venv/
 
-# Ignore environment variables
+# Environment variables
 .env
+.env.local
+.env.*.local
 
-# Ignore Streamlit and Flask temporary files
-.streamlit/
-*.sqlite3
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# Tailwind and PostCSS cache
+.tailwind/
+postcss.config.js
+
+# Public assets (generated during build)
+public/vite.svg
+
+# Editor and system files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Coverage and testing files
+coverage/
+
+# React-specific files
+src/assets/react.svg
+
+# Project-specific files
+jsconfig.app.json
+components.json
