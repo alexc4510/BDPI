@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Characteristic</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/">Home</a></li>
+            <li><a href="/plants">Plants</a></li>
+            <li><a href="/characteristics">Characteristics</a></li>
+            <li><a href="/plant_characteristics">Associations</a></li>
+        </ul>
+    </nav>
+    <h1>Edit Characteristic</h1>
+    <form method="POST" action="/update_characteristic/{{ characteristic[0] }}">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ characteristic[1] }}" required>
+        <br>
+        <label for="value">Value:</label>
+        <input type="text" id="value" name="value" value="{{ characteristic[2] }}">
+        <br>
+        <label for="unit">Unit:</label>
+        <input type="text" id="unit" name="unit" value="{{ characteristic[3] }}">
+        <br>
+        <label for="importance">Importance:</label>
+        <select id="importance" name="importance">
+            <option value="High" {% if characteristic[4] == 'High' %}selected{% endif %}>High</option>
+            <option value="Medium" {% if characteristic[4] == 'Medium' %}selected{% endif %}>Medium</option>
+            <option value="Low" {% if characteristic[4] == 'Low' %}selected{% endif %}>Low</option>
+        </select>
+        <br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

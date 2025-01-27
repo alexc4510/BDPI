@@ -126,6 +126,52 @@ def delete_characteristic(id):
     return redirect(url_for("characteristics"))
 
 
+# Edit Characteristic Page (GET)
+@app.route("/edit_characteristic/<int:id>")
+def edit_characteristic(id):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Characteristics WHERE id = %s", [id])
+        characteristic = cur.fetchone()
+        cur.close()
+        if characteristic:
+            return render_template(
+                "edit_characteristic.html", characteristic=characteristic
+            )
+        else:
+            flash("Characteristic not found!", "error")
+            return redirect(url_for("characteristics"))
+    except Exception as e:
+        flash(f"An error occurred: {e}", "error")
+        return redirect(url_for("characteristics"))
+
+
+# Update Characteristic (POST)
+@app.route("/update_characteristic/<int:id>", methods=["POST"])
+def update_characteristic(id):
+    try:
+        name = request.form["name"]
+        value = request.form["value"]
+        unit = request.form["unit"]
+        importance = request.form["importance"]
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            """
+            UPDATE Characteristics 
+            SET name = %s, value = %s, unit = %s, importance = %s 
+            WHERE id = %s
+            """,
+            (name, value, unit, importance, id),
+        )
+        mysql.connection.commit()
+        cur.close()
+        flash("Characteristic updated successfully!", "success")
+    except Exception as e:
+        flash(f"An error occurred: {e}", "error")
+    return redirect(url_for("characteristics"))
+
+
 # Associations CRUD
 @app.route("/plant_characteristics")
 def plant_characteristics():
