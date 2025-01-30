@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Plant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="/">Home</a></li>
+            <li><a href="/plants">Plants</a></li>
+            <li><a href="/characteristics">Characteristics</a></li>
+            <li><a href="/plant_characteristics">Associations</a></li>
+        </ul>
+    </nav>
+    <h1>Edit Plant</h1>
+    <form method="POST" action="/update_plant/{{ plant[0] }}">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ plant[1] }}" required>
+        <br>
+        <label for="scientific_name">Scientific Name:</label>
+        <input type="text" id="scientific_name" name="scientific_name" value="{{ plant[2] }}">
+        <br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description">{{ plant[3] }}</textarea>
+        <br>
+        <label for="origin">Origin:</label>
+        <input type="text" id="origin" name="origin" value="{{ plant[4] }}">
+        <br>
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="type" value="{{ plant[5] }}">
+        <br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

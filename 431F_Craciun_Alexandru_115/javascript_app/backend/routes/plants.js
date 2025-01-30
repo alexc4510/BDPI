@@ -24,6 +24,26 @@ router.post('/', (req, res) => {
     });
 });
 
+// Edit a plant
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { name, scientific_name, description, origin, type } = req.body;
+    const query = `
+        UPDATE Plants 
+        SET name = ?, scientific_name = ?, description = ?, origin = ?, type = ? 
+        WHERE id = ?
+    `;
+    db.query(query, [name, scientific_name, description, origin, type, id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Plant not found' });
+        }
+        res.json({ message: 'Plant updated successfully' });
+    });
+});
+
 // Delete a plant
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
